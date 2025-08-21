@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  oracle-db:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: oracle-xe
+    ports:
+      - "1521:1521"   # Porta do Oracle
+      - "5500:5500"   # Enterprise Manager Express
+    environment:
+      ORACLE_PASSWORD: admin123
+      APP_USER: admin
+      APP_USER_PASSWORD: admin123
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+
+  dbeaver:
+    image: dbeaver/cloudbeaver:latest
+    container_name: cloudbeaver
+    ports:
+      - "8978:8978"
+    depends_on:
+      - oracle-db
+
+volumes:
+  oracle-data:
