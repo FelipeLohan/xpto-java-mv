@@ -36,7 +36,7 @@ public class MovimentacaoService {
 
         // Regra de Negócio: Não permitir movimentações em contas inativas
         if (!conta.isAtivo()) {
-            throw new BusinessLogicException("Não é possível registrar movimentação para uma conta inativa.");
+          throw new BusinessLogicException("Não é possível registrar movimentação para uma conta inativa.");
         }
         
         Movimentacao newMovimentacao = new Movimentacao();
@@ -55,9 +55,10 @@ public class MovimentacaoService {
      * @return Uma lista de movimentações.
      */
     public List<Movimentacao> listMovimentacoesPorConta(Long contaId) {
-        if (!contaRepository.existsById(contaId)) {
-            throw new EntityNotFoundException("Conta não encontrada com o ID: " + contaId);
-        }
-        return movimentacaoRepository.findByContaId(contaId);
+      if (!contaRepository.existsById(contaId)) {
+        throw new EntityNotFoundException("Conta não encontrada com o ID: " + contaId);
+      }
+
+      return movimentacaoRepository.findByContaId(contaId);
     }
 }

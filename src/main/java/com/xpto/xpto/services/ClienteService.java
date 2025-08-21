@@ -37,84 +37,84 @@ public class ClienteService {
      */
     @Transactional
     public PessoaFisica createPessoaFisica(PessoaFisicaCreateDTO dto) {
-        // Regra: Valida se o CPF já existe para evitar duplicidade
-        if (pessoaFisicaRepository.findByCpf(dto.getCpf()).isPresent()) {
-            throw new BusinessLogicException("CPF já cadastrado no sistema.");
-        }
+      // Regra: Valida se o CPF já existe para evitar duplicidade
+      if (pessoaFisicaRepository.findByCpf(dto.getCpf()).isPresent()) {
+        throw new BusinessLogicException("CPF já cadastrado no sistema.");
+      }
 
-        // 1. Cria a entidade Cliente (elo central)
-        Cliente newCliente = new Cliente();
-        newCliente.setTipoPessoa(TipoPessoa.PF);
-        newCliente.setDataCadastro(LocalDate.now());
-        Cliente clienteSalvo = clienteRepository.save(newCliente);
+      // 1. Cria a entidade Cliente (elo central)
+      Cliente newCliente = new Cliente();
+      newCliente.setTipoPessoa(TipoPessoa.PF);
+      newCliente.setDataCadastro(LocalDate.now());
+      Cliente clienteSalvo = clienteRepository.save(newCliente);
 
-        // 2. Cria a entidade PessoaFisica
-        PessoaFisica newPessoaFisica = new PessoaFisica();
-        newPessoaFisica.setNome(dto.getNome());
-        newPessoaFisica.setCpf(dto.getCpf());
-        newPessoaFisica.setTelefone(dto.getTelefone());
-        newPessoaFisica.setCliente(clienteSalvo);
-        PessoaFisica savedPessoaFisica = pessoaFisicaRepository.save(newPessoaFisica);
+      // 2. Cria a entidade PessoaFisica
+      PessoaFisica newPessoaFisica = new PessoaFisica();
+      newPessoaFisica.setNome(dto.getNome());
+      newPessoaFisica.setCpf(dto.getCpf());
+      newPessoaFisica.setTelefone(dto.getTelefone());
+      newPessoaFisica.setCliente(clienteSalvo);
+      PessoaFisica savedPessoaFisica = pessoaFisicaRepository.save(newPessoaFisica);
 
-        // 3. Cria a primeira Conta do cliente
-        Conta newConta = new Conta();
-        newConta.setCliente(clienteSalvo);
-        newConta.setNomeBanco(dto.getNomeBanco());
-        newConta.setAgencia(dto.getAgencia());
-        newConta.setNumeroConta(dto.getNumeroConta());
-        Conta contaSalva = contaRepository.save(newConta);
+      // 3. Cria a primeira Conta do cliente
+      Conta newConta = new Conta();
+      newConta.setCliente(clienteSalvo);
+      newConta.setNomeBanco(dto.getNomeBanco());
+      newConta.setAgencia(dto.getAgencia());
+      newConta.setNumeroConta(dto.getNumeroConta());
+      Conta contaSalva = contaRepository.save(newConta);
 
         // 4. Cria a Movimentação Inicial (Crédito) 
-        Movimentacao newMovimentacaoInicial = new Movimentacao();
-        newMovimentacaoInicial.setConta(contaSalva);
-        newMovimentacaoInicial.setDescricao("Movimentação inicial de cadastro");
-        newMovimentacaoInicial.setTipoMovimentacao(TipoMovimentacao.CREDITO);
-        newMovimentacaoInicial.setValor(dto.getValorInicial());
-        newMovimentacaoInicial.setDataMovimentacao(LocalDateTime.now());
-        movimentacaoRepository.save(newMovimentacaoInicial);
+      Movimentacao newMovimentacaoInicial = new Movimentacao();
+      newMovimentacaoInicial.setConta(contaSalva);
+      newMovimentacaoInicial.setDescricao("Movimentação inicial de cadastro");
+      newMovimentacaoInicial.setTipoMovimentacao(TipoMovimentacao.CREDITO);
+      newMovimentacaoInicial.setValor(dto.getValorInicial());
+      newMovimentacaoInicial.setDataMovimentacao(LocalDateTime.now());
+      movimentacaoRepository.save(newMovimentacaoInicial);
         
-        return savedPessoaFisica;
+      return savedPessoaFisica;
     }
 
     @Transactional
     public PessoaJuridica createPessoaJuridica(PessoaJuridicaCreateDTO dto) {
-        // Regra: Valida se o CNPJ já existe para evitar duplicidade
-        if (pessoaJuridicaRepository.findByCnpj(dto.getCnpj()).isPresent()) {
-            throw new BusinessLogicException("CNPJ já cadastrado no sistema.");
-        }
+      // Regra: Valida se o CNPJ já existe para evitar duplicidade
+      if (pessoaJuridicaRepository.findByCnpj(dto.getCnpj()).isPresent()) {
+        throw new BusinessLogicException("CNPJ já cadastrado no sistema.");
+      }
 
-        // 1. Cria a entidade Cliente (elo central)
-        Cliente newCliente = new Cliente();
-        newCliente.setTipoPessoa(TipoPessoa.PJ);
-        newCliente.setDataCadastro(LocalDate.now());
-        Cliente clienteSalvo = clienteRepository.save(newCliente);
+      // 1. Cria a entidade Cliente (elo central)
+      Cliente newCliente = new Cliente();
+      newCliente.setTipoPessoa(TipoPessoa.PJ);
+      newCliente.setDataCadastro(LocalDate.now());
+      Cliente clienteSalvo = clienteRepository.save(newCliente);
 
-        // 2. Cria a entidade PessoaJuridica
-        PessoaJuridica newPessoaJuridica = new PessoaJuridica();
-        newPessoaJuridica.setRazaoSocial(dto.getRazaoSocial());
-        newPessoaJuridica.setCnpj(dto.getCnpj());
-        newPessoaJuridica.setTelefone(dto.getTelefone());
-        newPessoaJuridica.setCliente(clienteSalvo);
-        PessoaJuridica savedPessoaJuridica = pessoaJuridicaRepository.save(newPessoaJuridica);
+      // 2. Cria a entidade PessoaJuridica
+      PessoaJuridica newPessoaJuridica = new PessoaJuridica();
+      newPessoaJuridica.setRazaoSocial(dto.getRazaoSocial());
+      newPessoaJuridica.setCnpj(dto.getCnpj());
+      newPessoaJuridica.setTelefone(dto.getTelefone());
+      newPessoaJuridica.setCliente(clienteSalvo);
+      PessoaJuridica savedPessoaJuridica = pessoaJuridicaRepository.save(newPessoaJuridica);
 
-        // 3. Cria a primeira Conta do cliente
-        Conta newConta = new Conta();
-        newConta.setCliente(clienteSalvo);
-        newConta.setNomeBanco(dto.getNomeBanco());
-        newConta.setAgencia(dto.getAgencia());
-        newConta.setNumeroConta(dto.getNumeroConta());
-        Conta contaSalva = contaRepository.save(newConta);
+      // 3. Cria a primeira Conta do cliente
+      Conta newConta = new Conta();
+      newConta.setCliente(clienteSalvo);
+      newConta.setNomeBanco(dto.getNomeBanco());
+      newConta.setAgencia(dto.getAgencia());
+      newConta.setNumeroConta(dto.getNumeroConta());
+      Conta contaSalva = contaRepository.save(newConta);
 
-        // 4. Cria a Movimentação Inicial (Crédito) 
-        Movimentacao newMovimentacaoInicial = new Movimentacao();
-        newMovimentacaoInicial.setConta(contaSalva);
-        newMovimentacaoInicial.setDescricao("Movimentação inicial de cadastro");
-        newMovimentacaoInicial.setTipoMovimentacao(TipoMovimentacao.CREDITO);
-        newMovimentacaoInicial.setValor(dto.getValorInicial());
-        newMovimentacaoInicial.setDataMovimentacao(LocalDateTime.now());
-        movimentacaoRepository.save(newMovimentacaoInicial);
+      // 4. Cria a Movimentação Inicial (Crédito) 
+      Movimentacao newMovimentacaoInicial = new Movimentacao();
+      newMovimentacaoInicial.setConta(contaSalva);
+      newMovimentacaoInicial.setDescricao("Movimentação inicial de cadastro");
+      newMovimentacaoInicial.setTipoMovimentacao(TipoMovimentacao.CREDITO);
+      newMovimentacaoInicial.setValor(dto.getValorInicial());
+      newMovimentacaoInicial.setDataMovimentacao(LocalDateTime.now());
+      movimentacaoRepository.save(newMovimentacaoInicial);
         
-        return savedPessoaJuridica;
+      return savedPessoaJuridica;
     }
     
     // ... aqui viriam os métodos para atualizar, buscar e deletar clientes,

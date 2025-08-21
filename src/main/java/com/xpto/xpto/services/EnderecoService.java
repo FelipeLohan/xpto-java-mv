@@ -43,16 +43,18 @@ public class EnderecoService {
 
     public List<Endereco> listEnderecosByCliente(Long clienteId) {
         if (!clienteRepository.existsById(clienteId)) {
-            throw new EntityNotFoundException("Cliente não encontrado com o ID: " + clienteId);
+          throw new EntityNotFoundException("Cliente não encontrado com o ID: " + clienteId);
         }
+        
         return enderecoRepository.findByClienteId(clienteId);
     }
     
     @Transactional
     public void deleteEndereco(Long id) {
         if (!enderecoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Endereço não encontrado com o ID: " + id);
+          throw new EntityNotFoundException("Endereço não encontrado com o ID: " + id);
         }
+
         enderecoRepository.deleteById(id);
     }
 

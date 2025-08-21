@@ -36,21 +36,21 @@ public class ContaService {
      * @return A conta após a atualização.
      */
     public Conta updateConta(Long id, Conta contaAtualizada) {
-        // Regra: "caso exista alguma movimentação associada, não permitir alteração" [cite: 36]
-        boolean hasMovimentacao = !movimentacaoRepository.findByContaId(id).isEmpty();
+      // Regra: "caso exista alguma movimentação associada, não permitir alteração" [cite: 36]
+      boolean hasMovimentacao = !movimentacaoRepository.findByContaId(id).isEmpty();
 
-        if (hasMovimentacao) {
-            throw new BusinessLogicException("Não é permitido alterar contas que já possuem movimentações.");
-        }
+      if (hasMovimentacao) {
+        throw new BusinessLogicException("Não é permitido alterar contas que já possuem movimentações.");
+      }
 
-        Conta contaExists = contaRepository.findById(id)
-          .orElseThrow(() -> new BusinessLogicException("Conta não encontrada com o ID: " + id));
+      Conta contaExists = contaRepository.findById(id)
+        .orElseThrow(() -> new BusinessLogicException("Conta não encontrada com o ID: " + id));
 
-        // Atualiza apenas os campos permitidos
-        contaExists.setNomeBanco(contaAtualizada.getNomeBanco());
-        contaExists.setAgencia(contaAtualizada.getAgencia());
-        contaExists.setNumeroConta(contaAtualizada.getNumeroConta());
+      // Atualiza apenas os campos permitidos
+      contaExists.setNomeBanco(contaAtualizada.getNomeBanco());
+      contaExists.setAgencia(contaAtualizada.getAgencia());
+      contaExists.setNumeroConta(contaAtualizada.getNumeroConta());
 
-        return contaRepository.save(contaExists);
+      return contaRepository.save(contaExists);
     }
 }
