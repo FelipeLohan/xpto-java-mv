@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/enderecos")
 public class EnderecoController {
 
-    // MUDANÇA: Injeção de dependência via construtor
     private final EnderecoService enderecoService;
 
     public EnderecoController(EnderecoService enderecoService) {

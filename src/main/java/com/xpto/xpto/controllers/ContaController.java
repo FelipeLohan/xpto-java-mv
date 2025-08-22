@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/contas")
 public class ContaController {
 
-    // MUDANÇA: Injeção de dependência via construtor
     private final ContaService contaService;
 
     public ContaController(ContaService contaService) {
@@ -18,7 +17,7 @@ public class ContaController {
     }
 
     /**
-     * Endpoint 1: Busca a conta de um cliente específico.
+     * Busca a conta de um cliente específico.
      */
     @GetMapping("/cliente/{clienteId}")
     public ResponseEntity<Conta> buscarPorClienteId(@PathVariable Long clienteId) {
@@ -27,7 +26,7 @@ public class ContaController {
     }
 
     /**
-     * Endpoint 2: Desativa (exclusão lógica) uma conta.
+     * Desativa (exclusão lógica) uma conta.
      */
     @PutMapping("/{contaId}/desativar")
     public ResponseEntity<Conta> desativarConta(@PathVariable Long contaId) {
@@ -36,7 +35,7 @@ public class ContaController {
     }
 
     /**
-     * Endpoint 3: Ativa uma conta previamente desativada.
+     * Ativa uma conta previamente desativada.
      */
     @PutMapping("/{contaId}/ativar")
     public ResponseEntity<Conta> ativarConta(@PathVariable Long contaId) {
@@ -45,7 +44,7 @@ public class ContaController {
     }
 
     /**
-     * Endpoint 4: Atualiza os dados de uma conta, buscando-a pelo ID do cliente.
+     * Atualiza os dados de uma conta, buscando-a pelo ID do cliente.
      */
     @PutMapping("/cliente/{clienteId}")
     public ResponseEntity<Conta> atualizarPorClienteId(@PathVariable Long clienteId, @RequestBody ContaDTO dto) {

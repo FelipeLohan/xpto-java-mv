@@ -27,13 +27,11 @@ public class ClienteService {
 
 
     @Transactional
-    public PessoaFisica createPessoaFisica(PessoaFisicaDTO dto) { // MUDANÇA: Parâmetro atualizado
+    public PessoaFisica createPessoaFisica(PessoaFisicaDTO dto) {
         // Regra: Valida se o CPF já existe para evitar duplicidade
         if (pessoaFisicaRepository.findByCpf(dto.getCpf()).isPresent()) {
             throw new BusinessLogicException("CPF já cadastrado no sistema.");
         }
-
-        // --- LÓGICA ATUALIZADA ---
 
         // 1. Cria a entidade Endereco a partir do DTO aninhado
         Endereco newEndereco = new Endereco();
@@ -85,7 +83,7 @@ public class ClienteService {
     }
 
     @Transactional
-    public PessoaJuridica createPessoaJuridica(PessoaJuridicaDTO dto) { // MUDANÇA: Parâmetro atualizado
+    public PessoaJuridica createPessoaJuridica(PessoaJuridicaDTO dto) {
         if (pessoaJuridicaRepository.findByCnpj(dto.getCnpj()).isPresent()) {
             throw new BusinessLogicException("CNPJ já cadastrado no sistema.");
         }
