@@ -1,5 +1,7 @@
 package com.xpto.xpto.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +38,8 @@ public class Endereco {
     @Column(name = "cep", nullable = false, length = 8)
     private String cep;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+    @JsonBackReference
     private Cliente cliente;
 }

@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "clientes")
 @Getter
@@ -24,5 +26,11 @@ public class Cliente {
     @Column(name = "tipo_pessoa", nullable = false)
     private TipoPessoa tipoPessoa;
 
-    // Construtor, getters e setters são gerenciados pelo Lombok
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Endereco endereco;
+
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Conta conta;
 }

@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "movimentacoes")
@@ -33,5 +36,6 @@ public class Movimentacao {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conta_id", nullable = false)
+    @JsonBackReference
     private Conta conta;
 }
