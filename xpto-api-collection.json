@@ -1,0 +1,404 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+		"name": "XPTO - Controle Financeiro API",
+		"description": "Coleção de requisições para a API de controle financeiro da empresa XPTO, desenvolvida durante o desafio.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Clientes",
+			"item": [
+				{
+					"name": "Criar Cliente Pessoa Física",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Ana Carolina de Souza\",\n  \"cpf\": \"12345678901\",\n  \"telefone\": \"81999887766\",\n  \"endereco\": {\n    \"rua\": \"Avenida Boa Viagem\",\n    \"numero\": \"1234\",\n    \"complemento\": \"Apto 502\",\n    \"bairro\": \"Boa Viagem\",\n    \"cidade\": \"Recife\",\n    \"uf\": \"PE\",\n    \"cep\": \"51020000\"\n  },\n  \"conta\": {\n    \"nomeBanco\": \"Banco Digital XPTO\",\n    \"agencia\": \"0001\",\n    \"numeroConta\": \"112233-4\"\n  },\n  \"valorInicial\": 2500.75\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/clientes/pessoas-fisicas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clientes",
+								"pessoas-fisicas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Cliente Pessoa Jurídica",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"razaoSocial\": \"Soluções em TI Recife Ltda\",\n  \"cnpj\": \"12345678000199\",\n  \"telefone\": \"8134445566\",\n  \"endereco\": {\n    \"rua\": \"Rua da Moeda\",\n    \"numero\": \"200\",\n    \"complemento\": \"Empresarial IT Center, Sala 101\",\n    \"bairro\": \"Recife Antigo\",\n    \"cidade\": \"Recife\",\n    \"uf\": \"PE\",\n    \"cep\": \"50030040\"\n  },\n  \"conta\": {\n    \"nomeBanco\": \"Banco Empresa XPTO\",\n    \"agencia\": \"0002\",\n    \"numeroConta\": \"998877-1\"\n  },\n  \"valorInicial\": 15000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/clientes/pessoas-juridicas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"clientes",
+								"pessoas-juridicas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Movimentações",
+			"item": [
+				{
+					"name": "Registrar Nova Movimentação (Crédito)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contaId\": 1,\n    \"descricao\": \"Recebimento de pagamento de serviço\",\n    \"valor\": 1250.50,\n    \"tipoMovimentacao\": \"CREDITO\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/movimentacoes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movimentacoes"
+							]
+						},
+						"description": "OBS: Altere o `contaId` para o ID de uma conta que você criou."
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Nova Movimentação (Débito)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contaId\": 1,\n    \"descricao\": \"Pagamento de fornecedor\",\n    \"valor\": 300.00,\n    \"tipoMovimentacao\": \"DEBITO\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/movimentacoes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movimentacoes"
+							]
+						},
+						"description": "OBS: Altere o `contaId` para o ID de uma conta que você criou."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Movimentações por Conta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/movimentacoes/conta/:contaId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movimentacoes",
+								"conta",
+								":contaId"
+							],
+							"variable": [
+								{
+									"key": "contaId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Contas",
+			"item": [
+				{
+					"name": "Buscar Conta por Cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/contas/cliente/:clienteId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contas",
+								"cliente",
+								":clienteId"
+							],
+							"variable": [
+								{
+									"key": "clienteId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Conta por Cliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nomeBanco\": \"Novo Banco Digital\",\n    \"agencia\": \"0001\",\n    \"numeroConta\": \"55555-5\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/contas/cliente/:clienteId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contas",
+								"cliente",
+								":clienteId"
+							],
+							"variable": [
+								{
+									"key": "clienteId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "OBS: Esta requisição falhará se a conta já possuir movimentações, conforme a regra de negócio."
+					},
+					"response": []
+				},
+				{
+					"name": "Desativar Conta",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/contas/:contaId/desativar",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contas",
+								":contaId",
+								"desativar"
+							],
+							"variable": [
+								{
+									"key": "contaId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ativar Conta",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/contas/:contaId/ativar",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contas",
+								":contaId",
+								"ativar"
+							],
+							"variable": [
+								{
+									"key": "contaId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Endereços",
+			"item": [
+				{
+					"name": "Buscar Endereço por Cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/enderecos/cliente/:clienteId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enderecos",
+								"cliente",
+								":clienteId"
+							],
+							"variable": [
+								{
+									"key": "clienteId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Endereço por Cliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rua\": \"Avenida Conselheiro Aguiar\",\n    \"numero\": \"4321\",\n    \"complemento\": \"Apto 1201\",\n    \"bairro\": \"Pina\",\n    \"cidade\": \"Recife\",\n    \"uf\": \"PE\",\n    \"cep\": \"51021020\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/enderecos/cliente/:clienteId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enderecos",
+								"cliente",
+								":clienteId"
+							],
+							"variable": [
+								{
+									"key": "clienteId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. Relatórios",
+			"item": [
+				{
+					"name": "Gerar Relatório de Saldo em Arquivo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/relatorios/cliente/:clienteId/gerar-arquivo?dataInicio=2025-01-01&dataFim=2025-12-31",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"relatorios",
+								"cliente",
+								":clienteId",
+								"gerar-arquivo"
+							],
+							"query": [
+								{
+									"key": "dataInicio",
+									"value": "2025-01-01"
+								},
+								{
+									"key": "dataFim",
+									"value": "2025-12-31"
+								}
+							],
+							"variable": [
+								{
+									"key": "clienteId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Esta requisição não tem corpo (body). Os parâmetros de data são passados na URL. O resultado é um arquivo .txt salvo na pasta 'relatorios' do seu projeto."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}
