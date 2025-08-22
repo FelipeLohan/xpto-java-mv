@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class MovimentacaoCreateDTO {
+public class MovimentacaoDTO {
     private Long contaId;
     private String descricao;
     private BigDecimal valor;

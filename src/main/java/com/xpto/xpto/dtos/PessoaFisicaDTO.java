@@ -7,17 +7,18 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class PessoaFisicaCreateDTO {
+public class PessoaFisicaDTO {
     // Dados da Pessoa Física
     private String nome;
     private String cpf;
     private String telefone;
 
-    // Dados da primeira conta
-    private String nomeBanco;
-    private String agencia;
-    private String numeroConta;
-    
+    // Objeto aninhado para os dados do endereço
+    private EnderecoDTO endereco;
+
+    // Objeto aninhado para os dados da conta
+    private ContaDTO conta;
+  
     // Dados da movimentação inicial
     private BigDecimal valorInicial;
 }

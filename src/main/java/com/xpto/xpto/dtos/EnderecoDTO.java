@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EnderecoCreateDTO {
-    private Long clienteId;
+public class EnderecoDTO {
     private String rua;
     private String numero;
     private String complemento;
