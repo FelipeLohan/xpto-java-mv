@@ -1,6 +1,6 @@
 package com.xpto.xpto.services;
 
-import com.xpto.xpto.dtos.MovimentacaoCreateDTO;
+import com.xpto.xpto.dtos.MovimentacaoDTO;
 import com.xpto.xpto.entities.Conta;
 import com.xpto.xpto.entities.Movimentacao;
 import com.xpto.xpto.exceptions.BusinessLogicException;
@@ -29,7 +29,7 @@ public class MovimentacaoService {
      * @return A entidade Movimentacao que foi salva.
      */
     @Transactional
-    public Movimentacao createMovimentacao(MovimentacaoCreateDTO dto) {
+    public Movimentacao createMovimentacao(MovimentacaoDTO dto) {
         // Busca a conta para associar a movimentação
         Conta conta = contaRepository.findById(dto.getContaId())
           .orElseThrow(() -> new EntityNotFoundException("Conta não encontrada com o ID: " + dto.getContaId()));
@@ -54,7 +54,8 @@ public class MovimentacaoService {
      * @param contaId O ID da conta.
      * @return Uma lista de movimentações.
      */
-    public List<Movimentacao> listMovimentacoesPorConta(Long contaId) {
+    @Transactional(readOnly = true)
+    public List<Movimentacao> listMovimentacoesByConta(Long contaId) {
       if (!contaRepository.existsById(contaId)) {
         throw new EntityNotFoundException("Conta não encontrada com o ID: " + contaId);
       }

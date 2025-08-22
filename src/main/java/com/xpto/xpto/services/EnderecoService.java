@@ -1,16 +1,12 @@
 package com.xpto.xpto.services;
 
-import com.xpto.xpto.dtos.EnderecoCreateDTO;
-import com.xpto.xpto.entities.Cliente;
+import com.xpto.xpto.dtos.EnderecoDTO;
 import com.xpto.xpto.entities.Endereco;
-import com.xpto.xpto.repositories.ClienteRepository;
 import com.xpto.xpto.repositories.EnderecoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class EnderecoService {
@@ -18,45 +14,39 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Transactional
-    public Endereco createEndereco(EnderecoCreateDTO dto) {
-        // Busca o cliente ao qual o endereço será associado
-        Cliente cliente = clienteRepository.findById(dto.getClienteId())
-          .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID: " + dto.getClienteId()));
-
-        // Mapeia os dados do DTO para a entidade
-        Endereco newEndereco = new Endereco();
-        newEndereco.setCliente(cliente);
-        newEndereco.setRua(dto.getRua());
-        newEndereco.setNumero(dto.getNumero());
-        newEndereco.setComplemento(dto.getComplemento());
-        newEndereco.setBairro(dto.getBairro());
-        newEndereco.setCidade(dto.getCidade());
-        newEndereco.setUf(dto.getUf());
-        newEndereco.setCep(dto.getCep());
-        
-        return enderecoRepository.save(newEndereco);
-    }
-
-    public List<Endereco> listEnderecosByCliente(Long clienteId) {
-        if (!clienteRepository.existsById(clienteId)) {
-          throw new EntityNotFoundException("Cliente não encontrado com o ID: " + clienteId);
-        }
-        
-        return enderecoRepository.findByClienteId(clienteId);
-    }
+    /**
+     * Busca o endereço associado a um ID de cliente específico.
+     * @param clienteId O ID do cliente.
+     * @return Um Optional contendo o endereço se encontrado, ou um Optional vazio caso contrário.
+     */
+    public Endereco findByClienteId(Long clienteId) {
+      return enderecoRepository.findByClienteId(clienteId)
+              .orElseThrow(() -> new EntityNotFoundException("Endereço não encontrado para o cliente com ID: " + clienteId));
+  }
     
+  /**
+     * Atualiza o endereço de um cliente específico.
+     * A anotação @Transactional garante que a operação seja atômica.
+     * @param clienteId O ID do cliente cujo endereço será atualizado.
+     * @param enderecoDTO O DTO contendo os novos dados do endereço.
+     * @return A entidade Endereco após a atualização.
+     */
     @Transactional
-    public void deleteEndereco(Long id) {
-        if (!enderecoRepository.existsById(id)) {
-          throw new EntityNotFoundException("Endereço não encontrado com o ID: " + id);
-        }
+    public Endereco updateByClienteId(Long clienteId, EnderecoDTO enderecoDTO) {
+        // 1. Busca o endereço existente.
+        // Se não encontrar, o método findByClienteId já lançará a exceção.
+        Endereco enderecoExistente = findByClienteId(clienteId);
 
-        enderecoRepository.deleteById(id);
+        // 2. Atualiza os campos do objeto encontrado com os dados do DTO.
+        enderecoExistente.setRua(enderecoDTO.getRua());
+        enderecoExistente.setNumero(enderecoDTO.getNumero());
+        enderecoExistente.setComplemento(enderecoDTO.getComplemento());
+        enderecoExistente.setBairro(enderecoDTO.getBairro());
+        enderecoExistente.setCidade(enderecoDTO.getCidade());
+        enderecoExistente.setUf(enderecoDTO.getUf());
+        enderecoExistente.setCep(enderecoDTO.getCep());
+
+        // 3. Salva a entidade atualizada.
+        return enderecoRepository.save(enderecoExistente);
     }
-
-    // Métodos para buscar por ID e para atualizar um endereço seguiriam a mesma lógica.
 }

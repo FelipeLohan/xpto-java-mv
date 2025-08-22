@@ -1,0 +1,11 @@
+Relatório de saldo do cliente
+----------------------------------------
+Cliente: Soluções em TI Recife Ltda - Cliente desde: 22/08/2025
+Endereço: Rua da Moeda, 200, null, Recife Antigo, Recife - PE/50030040
+Movimentações de crédito: 3
+Movimentações de débito: 1
+Total de movimentações: 4
+Valor pago pelas movimentações: R$ 4.00
+Saldo inicial: R$ 15,000.00
+Saldo atual: R$ 17,451.00
+----------------------------------------

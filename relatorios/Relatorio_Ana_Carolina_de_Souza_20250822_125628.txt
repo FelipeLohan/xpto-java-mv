@@ -1,0 +1,11 @@
+Relatório de saldo do cliente
+----------------------------------------
+Cliente: Ana Carolina de Souza - Cliente desde: 22/08/2025
+Endereço: Avenida Recife, 4321, Apto 1201, Pina, Recife - PE/51021020
+Movimentações de crédito: 1
+Movimentações de débito: 0
+Total de movimentações: 1
+Valor pago pelas movimentações: R$ 1.00
+Saldo inicial: R$ 2,500.75
+Saldo atual: R$ 2,500.75
+----------------------------------------
