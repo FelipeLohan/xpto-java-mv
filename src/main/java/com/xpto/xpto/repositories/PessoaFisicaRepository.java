@@ -22,4 +22,11 @@ public interface PessoaFisicaRepository extends JpaRepository<PessoaFisica, Long
      * @return Uma Optional contendo a pessoa física, se encontrada.
      */
     Optional<PessoaFisica> findByCpf(String cpf);
+
+    /**
+     * Busca uma pessoa física pelo ID do cliente associado.
+     * @param clienteId O ID da entidade Cliente.
+     * @return Um Optional contendo a pessoa física, se encontrada.
+     */
+    Optional<PessoaFisica> findByClienteId(Long clienteId);
 }

@@ -22,4 +22,11 @@ public interface PessoaJuridicaRepository extends JpaRepository<PessoaJuridica, 
      * @return Uma Optional contendo a pessoa jurídica, se encontrada.
      */
     Optional<PessoaJuridica> findById(Long id);
+
+    /**
+     * Busca uma pessoa jurídica pelo ID do cliente associado.
+     * @param clienteId O ID da entidade Cliente.
+     * @return Um Optional contendo a pessoa jurídica, se encontrada.
+     */
+    Optional<PessoaJuridica> findByClienteId(Long clienteId);
 }
