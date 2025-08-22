@@ -21,8 +21,6 @@ public class ClienteService {
     @Autowired
     private PessoaFisicaRepository pessoaFisicaRepository;
     
-    @Autowired
-    private ClienteRepository clienteRepository;
 
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
