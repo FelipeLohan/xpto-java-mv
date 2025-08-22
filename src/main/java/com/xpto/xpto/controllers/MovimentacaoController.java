@@ -1,26 +1,50 @@
 package com.xpto.xpto.controllers;
 
-import com.xpto.xpto.dtos.MovimentacaoCreateDTO;
+import com.xpto.xpto.dtos.MovimentacaoDTO;
 import com.xpto.xpto.entities.Movimentacao;
 import com.xpto.xpto.services.MovimentacaoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/movimentacoes")
 public class MovimentacaoController {
 
-    @Autowired
-    private MovimentacaoService movimentacaoService;
+    // MUDANÇA: Injeção de dependência via construtor
+    private final MovimentacaoService movimentacaoService;
 
+    public MovimentacaoController(MovimentacaoService movimentacaoService) {
+        this.movimentacaoService = movimentacaoService;
+    }
+
+    /**
+     * Registra uma nova movimentação.
+     */
     @PostMapping
-    public ResponseEntity<Movimentacao> registrar(@RequestBody MovimentacaoCreateDTO dto) {
+    public ResponseEntity<Movimentacao> registrar(@RequestBody MovimentacaoDTO dto) {
         Movimentacao novaMovimentacao = movimentacaoService.createMovimentacao(dto);
-        return new ResponseEntity<>(novaMovimentacao, HttpStatus.CREATED);
+
+        // MUDANÇA: Construção da URI para o novo recurso
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(novaMovimentacao.getId())
+                .toUri();
+
+        // MUDANÇA: Retornando status 201 Created com o header Location
+        return ResponseEntity.created(uri).body(novaMovimentacao);
+    }
+
+    /**
+     * Lista todas as movimentações de uma conta específica.
+     */
+    // NOVO ENDPOINT: Expondo a funcionalidade de listagem do service
+    @GetMapping("/conta/{contaId}")
+    public ResponseEntity<List<Movimentacao>> listarPorConta(@PathVariable Long contaId) {
+        List<Movimentacao> movimentacoes = movimentacaoService.listMovimentacoesByConta(contaId);
+        return ResponseEntity.ok(movimentacoes);
     }
 }

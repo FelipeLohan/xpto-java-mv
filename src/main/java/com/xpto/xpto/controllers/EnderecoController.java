@@ -1,37 +1,39 @@
 package com.xpto.xpto.controllers;
 
-import com.xpto.xpto.dtos.EnderecoCreateDTO;
+import com.xpto.xpto.dtos.EnderecoDTO;
 import com.xpto.xpto.entities.Endereco;
 import com.xpto.xpto.services.EnderecoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/enderecos")
 public class EnderecoController {
 
-    @Autowired
-    private EnderecoService enderecoService;
+    // MUDANÇA: Injeção de dependência via construtor
+    private final EnderecoService enderecoService;
 
-    @PostMapping
-    public ResponseEntity<Endereco> criar(@RequestBody EnderecoCreateDTO dto) {
-        Endereco novoEndereco = enderecoService.createEndereco(dto);
-        return new ResponseEntity<>(novoEndereco, HttpStatus.CREATED);
+    public EnderecoController(EnderecoService enderecoService) {
+        this.enderecoService = enderecoService;
     }
 
+    /**
+     * Busca o endereço de um cliente específico.
+     */
     @GetMapping("/cliente/{clienteId}")
-    public ResponseEntity<List<Endereco>> listarPorCliente(@PathVariable Long clienteId) {
-        List<Endereco> enderecos = enderecoService.listEnderecosByCliente(clienteId);
-        return ResponseEntity.ok(enderecos);
+    public ResponseEntity<Endereco> buscarPorClienteId(@PathVariable Long clienteId) {
+        // MUDANÇA: Chama o método correto do service e retorna um único Endereco, não uma lista.
+        Endereco endereco = enderecoService.findByClienteId(clienteId);
+        return ResponseEntity.ok(endereco);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        enderecoService.deleteEndereco(id);
-        return ResponseEntity.noContent().build();
+    /**
+     * Atualiza o endereço de um cliente específico.
+     */
+    @PutMapping("/cliente/{clienteId}")
+    public ResponseEntity<Endereco> atualizarPorClienteId(@PathVariable Long clienteId, @RequestBody EnderecoDTO dto) {
+        // MUDANÇA: Endpoint adicionado para expor a funcionalidade de atualização do service.
+        Endereco enderecoAtualizado = enderecoService.updateByClienteId(clienteId, dto);
+        return ResponseEntity.ok(enderecoAtualizado);
     }
 }
