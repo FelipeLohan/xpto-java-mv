@@ -8,17 +8,15 @@ import com.xpto.xpto.repositories.MovimentacaoRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ContaService {
-    @Autowired
-    private ContaRepository contaRepository;
-
-    @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
+    private final ContaRepository contaRepository;
+    private final MovimentacaoRepository movimentacaoRepository;
 
     /**
      * 1. Busca a conta de um cliente específico pelo ID do cliente.

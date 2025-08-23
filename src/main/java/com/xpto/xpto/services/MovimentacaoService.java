@@ -7,7 +7,8 @@ import com.xpto.xpto.exceptions.BusinessLogicException;
 import com.xpto.xpto.repositories.ContaRepository;
 import com.xpto.xpto.repositories.MovimentacaoRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +16,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MovimentacaoService {
     
-    @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
-    
-    @Autowired
-    private ContaRepository contaRepository;
+
+    private final MovimentacaoRepository movimentacaoRepository;
+    private final ContaRepository contaRepository;
 
     /**
      * Registra uma nova movimentação para uma conta, simulando a integração.

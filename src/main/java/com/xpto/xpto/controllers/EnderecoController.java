@@ -3,18 +3,18 @@ package com.xpto.xpto.controllers;
 import com.xpto.xpto.dtos.EnderecoDTO;
 import com.xpto.xpto.entities.Endereco;
 import com.xpto.xpto.services.EnderecoService;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/enderecos")
 public class EnderecoController {
 
     private final EnderecoService enderecoService;
-
-    public EnderecoController(EnderecoService enderecoService) {
-        this.enderecoService = enderecoService;
-    }
 
     /**
      * Busca o endereço de um cliente específico.

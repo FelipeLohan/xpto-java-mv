@@ -3,7 +3,8 @@ package com.xpto.xpto.services;
 import com.xpto.xpto.entities.*;
 import com.xpto.xpto.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,18 +21,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RelatorioService {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
-    @Autowired
-    private PessoaFisicaRepository pessoaFisicaRepository;
-    @Autowired
-    private PessoaJuridicaRepository pessoaJuridicaRepository;
-    @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
-    @Autowired
-    private ContaRepository contaRepository;
+    
+    private final ClienteRepository clienteRepository;
+    private final PessoaFisicaRepository pessoaFisicaRepository;
+    private final PessoaJuridicaRepository pessoaJuridicaRepository;
+    private final MovimentacaoRepository movimentacaoRepository;
+    private final ContaRepository contaRepository;
 
     /**
      * Gera um relatório de saldo para um cliente em um período e o salva em um arquivo .txt.

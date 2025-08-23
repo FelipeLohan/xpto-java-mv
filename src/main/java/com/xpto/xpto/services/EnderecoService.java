@@ -4,15 +4,15 @@ import com.xpto.xpto.dtos.EnderecoDTO;
 import com.xpto.xpto.entities.Endereco;
 import com.xpto.xpto.repositories.EnderecoRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class EnderecoService {
-
-    @Autowired
-    private EnderecoRepository enderecoRepository;
+    private final EnderecoRepository enderecoRepository;
 
     /**
      * Busca o endereço associado a um ID de cliente específico.

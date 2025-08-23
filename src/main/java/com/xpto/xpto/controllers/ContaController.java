@@ -3,18 +3,18 @@ package com.xpto.xpto.controllers;
 import com.xpto.xpto.dtos.ContaDTO;
 import com.xpto.xpto.entities.Conta;
 import com.xpto.xpto.services.ContaService;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/contas")
 public class ContaController {
 
     private final ContaService contaService;
-
-    public ContaController(ContaService contaService) {
-        this.contaService = contaService;
-    }
 
     /**
      * Busca a conta de um cliente específico.

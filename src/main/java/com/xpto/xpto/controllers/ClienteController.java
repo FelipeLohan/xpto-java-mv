@@ -5,6 +5,9 @@ import com.xpto.xpto.dtos.PessoaJuridicaDTO;
 import com.xpto.xpto.entities.PessoaFisica;
 import com.xpto.xpto.entities.PessoaJuridica;
 import com.xpto.xpto.services.ClienteService;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,15 +17,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/clientes")
 public class ClienteController {
 
     private final ClienteService clienteService;
-
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
 
     @PostMapping("/pessoas-fisicas")
     public ResponseEntity<PessoaFisica> criarPessoaFisica(@RequestBody PessoaFisicaDTO dto) {

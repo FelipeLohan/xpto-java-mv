@@ -5,7 +5,9 @@ import com.xpto.xpto.dtos.PessoaJuridicaDTO;
 import com.xpto.xpto.entities.*;
 import com.xpto.xpto.exceptions.BusinessLogicException;
 import com.xpto.xpto.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,18 +15,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class ClienteService {
 
-    @Autowired
-    private PessoaJuridicaRepository pessoaJuridicaRepository;
-
-    @Autowired
-    private PessoaFisicaRepository pessoaFisicaRepository;
-    
-
-    @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
-
+    private final PessoaJuridicaRepository pessoaJuridicaRepository;
+    private final PessoaFisicaRepository pessoaFisicaRepository;
+    private final MovimentacaoRepository movimentacaoRepository;
 
     @Transactional
     public PessoaFisica createPessoaFisica(PessoaFisicaDTO dto) {

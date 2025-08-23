@@ -3,6 +3,9 @@ package com.xpto.xpto.controllers;
 import com.xpto.xpto.dtos.MovimentacaoDTO;
 import com.xpto.xpto.entities.Movimentacao;
 import com.xpto.xpto.services.MovimentacaoService;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -10,16 +13,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/movimentacoes")
 public class MovimentacaoController {
 
     // MUDANÇA: Injeção de dependência via construtor
     private final MovimentacaoService movimentacaoService;
-
-    public MovimentacaoController(MovimentacaoService movimentacaoService) {
-        this.movimentacaoService = movimentacaoService;
-    }
 
     /**
      * Registra uma nova movimentação.

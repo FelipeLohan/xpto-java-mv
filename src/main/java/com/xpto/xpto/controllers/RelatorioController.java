@@ -2,6 +2,8 @@ package com.xpto.xpto.controllers;
 
 import com.xpto.xpto.services.RelatorioService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,15 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalDate;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/relatorios")
 public class RelatorioController {
 
     private final RelatorioService relatorioService;
-
-    public RelatorioController(RelatorioService relatorioService) {
-        this.relatorioService = relatorioService;
-    }
 
     /**
      * Endpoint para solicitar a geração de um relatório de saldo em arquivo .txt.
